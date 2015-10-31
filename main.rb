@@ -9,9 +9,12 @@ require './filters'
 
 binding.pry
 
-pp qualified_candidates
+pp qualified_candidates(@candidates)
 
-experienced?
+puts experienced?(@candidates[0]).inspect
+
+puts "Enter candidate id: "
+$name = gets.chomp
 find(@candidates)
 qualified_candidates(@candidates)
 ordered_by_qualifications(@candidates)
