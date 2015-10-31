@@ -1,16 +1,17 @@
+# In this file we define the methods to help filter out candidates
+# This way, we keep these methods separated from other potential parts of the program
+
 #Takes in a candidate (hash)
 #Returns true if the candidate has 2 years of experience or more
 #Returns false otherwise
-def experienced?
-  puts @candidates[:years_of_experience] >= 2
- end
+def experienced?(candidate)
+  candidate[:years_of_experience] >= 2
+end
 
 #Takes in an id
 #Returns the candidate with that :id
 #If there is no candidate with that id, it naturally returns nil
-def find (candidate_id) 
-  puts "Enter candidate id: "
-  #name = gets.chomp
+def find (candidate_id)
   puts @candidates.find{|candidate| candidate_id == candidate[:id]}
  end
 
@@ -24,11 +25,13 @@ def find (candidate_id)
 def qualified_candidates (collection)
   match=[]
   
-    collection.each do |x|
-      if years_of_experience(x[:years_of_experience]) && github_points(x[:github_points]) && knowledge(x[:languages]) && applied_time(x[:date_applied]) && age_candidate(x[:age])
-        match << (x)
-      end
+  collection.each do |x|
+    if years_of_experience(x[:years_of_experience]) && github_points(x[:github_points]) && knowledge(x[:languages]) && applied_time(x[:date_applied]) && old_enough(x[:age])
+      match << (x)
+    end
   end
+
+  match
 end
 
 def years_of_experience (year)
@@ -40,15 +43,17 @@ def github_points (points)
 end
 
 def knowledge (language)
-  laguage = true if (language.to_s).match("Ruby")
-  laguage = true if (language.to_s).match("Python")
+  knows_ruby = true if (language.to_s).match("Ruby")
+  knows_python = true if (language.to_s).match("Python")
+
+  true if knows_python && knows_ruby
 end
 
 def applied_time (day)
   (Time.now.to_date - day).to_i <= 15
 end
 
-def age_candidate (age)
+def old_enough (age)
   age > 18
 end
 
