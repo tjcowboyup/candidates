@@ -36,11 +36,13 @@ def qualified_candidates (collection)
 end
 
 def years_of_experience (year)
- year >= 2
+  MIN_YEAR = 2
+  candidate[:years_of_experience] >= MIN_YEAR
 end
 
 def github_points (points)
-  points >= 100
+  MIN_POINT = 100
+  points >= MIN_POINT
 end
 
 def knowledge (language)
