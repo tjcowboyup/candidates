@@ -12,8 +12,9 @@ end
 #Returns the candidate with that :id
 #If there is no candidate with that id, it naturally returns nil
 def find (candidate_id)
-  puts @candidates.find{|candidate| candidate_id == candidate[:id]}
- end
+  @candidates.detect{|candidate| candidate_id == candidate[:id]}
+  puts "No match foud" if nil 
+  end
 
 #Takes in the collection of candidates
 #Returns a subset of the candidates that meet the following criteria:
@@ -43,10 +44,7 @@ def github_points (points)
 end
 
 def knowledge (language)
-  knows_ruby = true if (language.to_s).match("Ruby")
-  knows_python = true if (language.to_s).match("Python")
-
-  true if knows_python && knows_ruby
+  (language.to_s).match("Python") && (language.to_s).match("Ruby")
 end
 
 def applied_time (day)
@@ -70,16 +68,17 @@ end
 #quit: Exit the REPL / program
 def repl_based_menu (collection)
   p "one of the following commands: "
-  answer = gets.chomp
-  case (answer)
-  when ("find 1")
-    puts find(1)
-  when ("all")
-     puts collection
-  when ("qualified")
-     puts ordered_by_qualifications(qualified_candidates(@candidates))
+  answer = gets.chomp.split(' ')
+  case (answer[0])
+    when ("find")
+      puts find(answer[1])
+    when ("all")
+      puts collection
+    when ("qualified")
+      puts ordered_by_qualifications(qualified_candidates(@candidates))
+    when ("quit")
+      return
     else
       return
-    nil
-  end
+    end
 end
